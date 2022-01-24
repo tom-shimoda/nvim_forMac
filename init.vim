@@ -191,3 +191,22 @@ function! ToggleBetweenHeaderAndSource() abort
     endif
 endfunction
 
+" encode utf-8 lf
+function! ToUtf8() abort
+    execute 'e ++enc=shift-jis'
+    execute 'set fenc=utf-8'
+    silent write
+endfunction
+command! ToUtf8 :call ToUtf8()
+function! ToLf() abort
+    execute 'e ++ff=unix'
+    execute '%s///g'
+    silent write
+endfunction
+command! ToLf :call ToLf()
+function! ToUtf8Lf() abort
+    call ToUtf8()
+    call ToLf()
+endfunction
+command! ToUtf8Lf :call ToUtf8Lf()
+
