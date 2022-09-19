@@ -159,8 +159,8 @@ nnoremap <F12> :!open .<cr>
 "システムクリップボードにコピー
 noremap <C-c> "*yy
 "ウィンドウフォーカスの移動
-nnoremap <C-h> <C-w>W
-nnoremap <C-l> <C-w>w
+nnoremap <S-h> <C-w>W
+nnoremap <S-l> <C-w>w
 "v0.6.0より'Y'が'y$'に変更されたため再マッピング
 nnoremap Y yy
 
