@@ -1,17 +1,8 @@
 # --- colorscheme
-[[plugins]] # jellybeans
-repo = 'nanotech/jellybeans.vim'
-[[plugins]] # hybrid
-repo = 'w0ng/vim-hybrid'
-[[plugins]] # codedark
-repo = 'tomasiser/vim-code-dark'
-[[plugins]]
-repo = 'altercation/vim-colors-solarized'
 [[plugins]]
 repo = 'sainnhe/gruvbox-material'
 hook_add = '''
     set background=dark
-    "colorscheme hybrid
     colorscheme gruvbox-material
 '''
 
@@ -266,6 +257,7 @@ hook_add = '''
 [[plugins]]
 repo = 'tpope/vim-commentary'
 hook_add = '''
+    noremap <silent> <Space>/ :Commentary<CR>
     noremap <silent> <C-/> :Commentary<CR>
 '''
 
