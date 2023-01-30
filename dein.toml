@@ -266,7 +266,7 @@ hook_add = '''
 [[plugins]]
 repo = 'tpope/vim-commentary'
 hook_add = '''
-    noremap <silent> <Space>/ :Commentary<CR>
+    noremap <silent> <C-/> :Commentary<CR>
 '''
 
 # --- vim-table-mode
