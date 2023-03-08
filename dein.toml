@@ -233,7 +233,7 @@ hook_add = '''
         endif
     endfunction
 
-    " autocomplete
+    " autocomplete (参考: https://qiita.com/totto2727/items/d0844c79f97ab601f13b)
     inoremap <silent><expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-j>"
     inoremap <silent><expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-k>"
     inoremap <silent><expr> <Enter> coc#pum#visible() ? coc#pum#confirm() : "\<Enter>"
