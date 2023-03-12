@@ -73,7 +73,8 @@ set noswapfile
 set nobackup
 "undoファイル出力無効
 set noundofile
-
+"1行の最大文字数ボーダーライン表示
+set colorcolumn=120
 "更新時間
 set updatetime=300
 
