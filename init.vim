@@ -2,23 +2,6 @@ if &compatible
     set nocompatible
 endif
 
-" Vim終了時に現在のセッションを保存する
-"au VimLeave * call OnClose()
-"function! OnClose()
-"    mks! ~/Session.vim
-"endfunction
-
-"引数なし起動の時、前回のsessionを復元
-"autocmd VimEnter * nested if @% == '' && s:GetBufByte() == 0 | source ~/Session.vim | endif
-"function! s:GetBufByte()
-"    let byte = line2byte(line('$') + 1)
-"    if byte == -1
-"        return 0
-"    else
-"        return byte - 1
-"    endif
-"endfunction
-
 " ----- dein.vim -----
 
 " dein.vimインストール時に指定したディレクトリをセット
@@ -114,6 +97,10 @@ set completeopt=menuone
 " カーソル行をハイライト
 set cursorline
 
+" 不可視文字を可視化
+set listchars=eol:↩,tab:»-,trail:_
+set list
+
 " 改行時の自動コメント化をしない
 autocmd BufNewFile,BufRead * setlocal formatoptions-=c
 autocmd BufNewFile,BufRead * setlocal formatoptions-=r
@@ -127,6 +114,8 @@ let g:python3_host_prog = '/usr/bin/python3'
 nnoremap <Space>g :source ~/.config/nvim/init.vim<CR>
 "space割り当て解除 (誤爆を防ぐため)
 nnoremap <Space> <Nop>
+"tmuxで利用するので無効化
+nnoremap <C-q> <Nop>
 "3行飛び上下移動
 noremap <S-j> jjj
 noremap <S-k> jjj

@@ -92,38 +92,81 @@ hook_add = '''
     let g:EasyMotion_smartcase = 1
 '''
 
-# --- NERDTree
+# --- nvim-tree
 [[plugins]]
-repo = 'preservim/nerdtree'
+repo = 'nvim-tree/nvim-web-devicons'
+[[plugins]]
+repo = 'nvim-tree/nvim-tree.lua'
 hook_add = '''
-    let g:NERDTreeChDirMode=2
-    let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', '\.meta$', '\.exe$']
-    let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-    let g:NERDTreeShowBookmarks=1
-    let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-    let g:NERDTreeWinSize = 30
-    let NERDTreeShowHidden = 1
-    let g:NERDTreeDirArrowExpandable = '▸'
-    let g:NERDTreeDirArrowCollapsible = '▾'
-    set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-    nnoremap <Leader>f :NERDTreeFind<CR>
-    augroup NERD
-        au!
-        " 他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
-        "autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
-        " Vim起動時にNERDTreeを表示
-        "autocmd StdinReadPre * let s: std_in=1
-        "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
-        "autocmd VimEnter * wincmd p
-    augroup END
+nnoremap <silent> <F2> :NvimTreeFindFileToggle<CR>
+
+lua << EOF
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+-- setup with some options
+require("nvim-tree").setup({
+  -- '-'キーを無効化し、'u'で階層を上がるように(tmux用nvim-treeとバインドを同じにするため)
+  view = {
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+      },
+    },
+  },
+  remove_keymaps = {
+    '-',
+  }
+})
+
+-- nvim-treeが最後のbufferだった場合、自動で閉じる(参考:https://github.com/nvim-tree/nvim-tree.lua/wiki/Auto-Close)
+vim.api.nvim_create_autocmd("BufEnter", {
+  nested = true,
+  callback = function()
+    if #vim.api.nvim_list_wins() == 1 and require("nvim-tree.utils").is_nvim_tree_buf() then
+      vim.cmd "quit"
+    end
+  end
+})
+EOF
 '''
 
+# --- NERDTree
+# [[plugins]]
+# repo = 'preservim/nerdtree'
+# hook_add = '''
+#     let g:NERDTreeChDirMode=2
+#     let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', '\.meta$', '\.exe$']
+#     let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
+#     let g:NERDTreeShowBookmarks=1
+#     let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
+#     let g:NERDTreeWinSize = 30
+#     let NERDTreeShowHidden = 1
+#     let g:NERDTreeDirArrowExpandable = '▸'
+#     let g:NERDTreeDirArrowCollapsible = '▾'
+#     set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
+#     nnoremap <Leader>f :NERDTreeFind<CR>
+#     augroup NERD
+#         au!
+#         " 他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる。
+#         "autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+#         " Vim起動時にNERDTreeを表示
+#         "autocmd StdinReadPre * let s: std_in=1
+#         "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
+#         "autocmd VimEnter * wincmd p
+#     augroup END
+# '''
+
 # --- vim-nerdtree-tabs
-[[plugins]]
-repo = 'jistr/vim-nerdtree-tabs'
-hook_add = '''
-    nnoremap <silent> <F2> :NERDTreeTabsToggle<CR>
-'''
+# [[plugins]]
+# repo = 'jistr/vim-nerdtree-tabs'
+# hook_add = '''
+#     nnoremap <silent> <F2> :NERDTreeTabsToggle<CR>
+# '''
 
 # --- neosnippet-snippets
 [[plugins]]
@@ -194,14 +237,6 @@ hook_add = '''
 #    "let g:indentLine_char = '⮞'
 #    let g:indentLine_char = '▏'
 #'''
-
-# --- Seiya.vim
-[[plugins]]
-repo = 'miyakogi/seiya.vim'
-hook_add = '''
-    let g:seiya_auto_enable = 1
-    let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
-'''
 
 # --- vim-brightest
 # [[plugins]]
